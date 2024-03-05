@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private EnemyCharacter _character;
-    private List<float> _receiveTimeInterval = new List<float> {0, 0, 0, 0, 0};
-    private float _lastReceiveTime = 0;
+    [SerializeField] private EnemyCharacter character;
+    private List<float> receiveTimeInterval = new List<float> {0, 0, 0, 0, 0};
+    private float lastReceiveTime = 0;
     public float AverageInterval
     {
         get 
         {
-            int receiveTimeIntervalCount = _receiveTimeInterval.Count;
+            int receiveTimeIntervalCount = receiveTimeInterval.Count;
             float summ = 0;
-            for (int i = 0; i < _receiveTimeInterval.Count; i++)
-                summ += _receiveTimeInterval[i];
+            for (int i = 0; i < receiveTimeInterval.Count; i++)
+                summ += receiveTimeInterval[i];
 
             return summ / receiveTimeIntervalCount;
         }
@@ -22,18 +22,18 @@ public class EnemyController : MonoBehaviour
 
     private void SaveReceiveTime()
     {
-        float interval = Time.time - _lastReceiveTime;
-        _lastReceiveTime = Time.time;
+        float interval = Time.time - lastReceiveTime;
+        lastReceiveTime = Time.time;
 
-        _receiveTimeInterval.Add(interval);
-        _receiveTimeInterval.RemoveAt(0);
+        receiveTimeInterval.Add(interval);
+        receiveTimeInterval.RemoveAt(0);
     }
 
     internal void OnChange(List<DataChange> changes)
     {
         SaveReceiveTime();
 
-        Vector3 position = _character.TargetPosition;
+        Vector3 position = character.TargetPosition;
         Vector3 velocity = Vector3.zero;
         foreach (var dataChange in changes)
         {
@@ -63,6 +63,6 @@ public class EnemyController : MonoBehaviour
                     break;
             }
         }
-        _character.SetMovement(position, velocity, AverageInterval);
+        character.SetMovement(position, velocity, AverageInterval);
     }
 }

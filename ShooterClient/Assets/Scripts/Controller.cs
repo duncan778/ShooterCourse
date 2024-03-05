@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    [SerializeField] PlayerCharacter _player;
+    [SerializeField] PlayerCharacter player;
 
     void Update()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        _player.SetInput(h, v);
+        player.SetInput(h, v);
 
         SendMove();
     }
 
     private void SendMove()
     {
-        _player.GetMoveInfo(out Vector3 position, out Vector3 velocity);
+        player.GetMoveInfo(out Vector3 position, out Vector3 velocity);
         var data = new Dictionary<string, object>()
         {
             { "pX", position.x},

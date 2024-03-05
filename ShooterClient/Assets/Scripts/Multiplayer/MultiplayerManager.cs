@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 {
-    [SerializeField] private GameObject _player;
-    [SerializeField] private EnemyController _enemy;
+    [SerializeField] private GameObject player;
+    [SerializeField] private EnemyController enemy;
 
-    private ColyseusRoom<State> _room;
+    private ColyseusRoom<State> room;
 
     protected override void Awake()
     {
@@ -20,9 +20,9 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     private async void Connect()
     {
-        _room = await Instance.client.JoinOrCreate<State>("state_handler");
+        room = await Instance.client.JoinOrCreate<State>("state_handler");
 
-        _room.OnStateChange += OnChange;
+        room.OnStateChange += OnChange;
     }
 
     private void OnChange(State state, bool isFirstState)
@@ -31,24 +31,24 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
             return;
 
         state.players.ForEach((key, player) => {
-            if (key == _room.SessionId) CreatePlayer(player);
+            if (key == room.SessionId) CreatePlayer(player);
             else CreateEnemy(key, player);
         });
 
-        _room.State.players.OnAdd += CreateEnemy;
-        _room.State.players.OnRemove += RemoveEnemy;
+        room.State.players.OnAdd += CreateEnemy;
+        room.State.players.OnRemove += RemoveEnemy;
     }
 
     private void CreatePlayer(Player player)
     {
         var position = new Vector3(player.pX, player.pY, player.pZ);
-        Instantiate(_player, position, Quaternion.identity);
+        Instantiate(this.player, position, Quaternion.identity);
     }
 
     private void CreateEnemy(string key, Player player)
     {
         var position = new Vector3(player.pX, player.pY, player.pZ);
-        var enemy = Instantiate(_enemy, position, Quaternion.identity);    
+        var enemy = Instantiate(this.enemy, position, Quaternion.identity);    
         player.OnChange += enemy.OnChange;
     }
 
@@ -59,13 +59,13 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     public void SendMessage(string key, Dictionary<string, object> data)
     {
-        _room.Send(key, data);
+        room.Send(key, data);
     }
 
     protected override void OnDestroy() 
     {
         base.OnDestroy();
 
-        _room.Leave();
+        room.Leave();
     }
 }

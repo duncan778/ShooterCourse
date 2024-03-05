@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyCharacter : MonoBehaviour
 {
     public Vector3 TargetPosition { get; private set; } = Vector3.zero;
-    private float _velocityMagnitude = 0;
+    private float velocityMagnitude = 0;
 
     private void Start()
     {
@@ -12,9 +12,9 @@ public class EnemyCharacter : MonoBehaviour
 
     private void Update()
     {
-        if (_velocityMagnitude > 0.1f)
+        if (velocityMagnitude > 0.1f)
         {
-            float maxDistance = _velocityMagnitude * Time.deltaTime;
+            float maxDistance = velocityMagnitude * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, TargetPosition, maxDistance);
         }
         else
@@ -24,6 +24,6 @@ public class EnemyCharacter : MonoBehaviour
     public void SetMovement(in Vector3 position, in Vector3 velocity, in float averageInterval)
     {
         TargetPosition = position + (velocity * averageInterval);
-        _velocityMagnitude = velocity.magnitude;
+        velocityMagnitude = velocity.magnitude;
     }
 }
