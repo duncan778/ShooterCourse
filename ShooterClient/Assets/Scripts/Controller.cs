@@ -4,12 +4,21 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     [SerializeField] PlayerCharacter player;
+    [SerializeField] private float mouseSensetivity = 2f;
 
     void Update()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        player.SetInput(h, v);
+        
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        bool space = Input.GetKeyDown(KeyCode.Space);
+
+        player.SetInput(h, v, mouseX * mouseSensetivity);
+        player.RotateX(-mouseY * mouseSensetivity);
+        if (space) player.Jump();
 
         SendMove();
     }
