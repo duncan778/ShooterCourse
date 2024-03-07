@@ -1,21 +1,22 @@
 using UnityEngine;
 
-public class PlayerCharacter : MonoBehaviour
+public class PlayerCharacter : Character
 {
 
     [SerializeField] private Rigidbody playerRb;
-    [SerializeField] private float speed = 2f;
     [SerializeField] private Transform head;
     [SerializeField] private Transform cameraPoint;
     [SerializeField] private float maxHeadAngle = 90;
     [SerializeField] private float minHeadAngle = -90;
     [SerializeField] private float jumpForce = 50f;
+    [SerializeField] private CheckFly checkFly;
+    [SerializeField] private float jumpDelay = 0.2f;
 
+    private float jumpTime;
     private float inputH;
     private float inputV;
     private float rotateY;
     private float currentRotateX;
-    private bool isFly = true;
 
     private void Start()
     {
@@ -55,8 +56,9 @@ public class PlayerCharacter : MonoBehaviour
         // Vector3 direction = new Vector3(inputH, 0, inputV).normalized;
         // transform.position += direction * Time.deltaTime * speed;
 
-        Vector3 velocity = (transform.forward * inputV + transform.right * inputH).normalized * speed;
+        Vector3 velocity = (transform.forward * inputV + transform.right * inputH).normalized * Speed;
         velocity.y = playerRb.velocity.y;
+        Velocity = velocity;
         playerRb.velocity = velocity;
     }
     
@@ -66,24 +68,12 @@ public class PlayerCharacter : MonoBehaviour
         velocity = playerRb.velocity;
     }
 
-    private void OnCollisionStay(Collision other)
-    {
-        var contactPoints = other.contacts;
-        for (int i = 0; i < contactPoints.Length; i++)
-        {
-            if (contactPoints[i].normal.y > 0.45f) isFly = false;
-        }
-    }
-
-    private void OnCollisionExit(Collision other)
-    {
-        isFly = true;
-    }
-
     public void Jump()
     {
-        if (isFly) return;
+        if (checkFly.IsFly) return;
+        if (Time.time - jumpTime < jumpDelay) return;
 
+        jumpTime = Time.time;
         playerRb.AddForce(0, jumpForce, 0, ForceMode.VelocityChange);
     }
 }
