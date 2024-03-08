@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 {
-    [SerializeField] private GameObject player;
+    [SerializeField] private PlayerCharacter player;
     [SerializeField] private EnemyController enemy;
 
     private ColyseusRoom<State> room;
@@ -20,7 +20,12 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     private async void Connect()
     {
-        room = await Instance.client.JoinOrCreate<State>("state_handler");
+        Dictionary<string, object> data = new()
+        {
+            {"speed", player.Speed}
+        };
+
+        room = await Instance.client.JoinOrCreate<State>("state_handler", data);
 
         room.OnStateChange += OnChange;
     }
@@ -48,8 +53,8 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     private void CreateEnemy(string key, Player player)
     {
         var position = new Vector3(player.pX, player.pY, player.pZ);
-        var enemy = Instantiate(this.enemy, position, Quaternion.identity);    
-        player.OnChange += enemy.OnChange;
+        var enemy = Instantiate(this.enemy, position, Quaternion.identity); 
+        enemy.Init(player);   
     }
 
     private void RemoveEnemy(string key, Player player)

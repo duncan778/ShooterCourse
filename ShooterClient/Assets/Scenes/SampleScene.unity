@@ -394,7 +394,7 @@ PrefabInstance:
     - target: {fileID: 2647080887666779655, guid: 2653d8ed8668c35cb949b786e6dccace,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3308221623811791477, guid: 2653d8ed8668c35cb949b786e6dccace,
         type: 3}
@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _colyseusSettings: {fileID: 11400000, guid: d6fbcee34fba71e88916ac33b00901e1, type: 2}
-  player: {fileID: 2647080887666779655, guid: 2653d8ed8668c35cb949b786e6dccace, type: 3}
+  player: {fileID: 4862608659234281529, guid: 2653d8ed8668c35cb949b786e6dccace, type: 3}
   enemy: {fileID: -2673800919989353267, guid: a4cf71689c23f4db2b5d7c13ee65b4c6, type: 3}
 --- !u!1 &1023130567
 GameObject:

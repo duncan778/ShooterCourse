@@ -62,10 +62,12 @@ public class PlayerCharacter : Character
         playerRb.velocity = velocity;
     }
     
-    public void GetMoveInfo(out Vector3 position, out Vector3 velocity)
+    public void GetMoveInfo(out Vector3 position, out Vector3 velocity, out float rotateX, out float rotateY)
     {
         position = transform.position;
         velocity = playerRb.velocity;
+        rotateX = head.localEulerAngles.x;
+        rotateY = transform.eulerAngles.y;
     }
 
     public void Jump()
