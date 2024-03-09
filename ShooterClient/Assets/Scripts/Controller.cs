@@ -5,6 +5,7 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     [SerializeField] PlayerCharacter player;
+    [SerializeField] private PlayerGun gun;
     [SerializeField] private float mouseSensetivity = 2f;
     
     private bool cursorActivated;
@@ -30,11 +31,12 @@ public class Controller : MonoBehaviour
 
         bool space = Input.GetKeyDown(KeyCode.Space);
 
+        bool isShoot = Input.GetMouseButton(0);
+
         player.SetInput(h, v, mouseX * mouseSensetivity);
         player.RotateX(-mouseY * mouseSensetivity);
-
         if (space) player.Jump();
-
+        if (isShoot) gun.Shoot();
         SendMove();
     }
 
