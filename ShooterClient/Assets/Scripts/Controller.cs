@@ -1,13 +1,27 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
     [SerializeField] PlayerCharacter player;
     [SerializeField] private float mouseSensetivity = 2f;
+    
+    private bool cursorActivated;
+
+    private void Start()
+    {
+        ActivateCursor(true);
+    }
+
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape)) ActivateCursor(false);
+        else if (!cursorActivated && Input.GetMouseButtonDown(0)) ActivateCursor(true);
+        
+        if (cursorActivated == false) return;
+
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         
@@ -18,6 +32,7 @@ public class Controller : MonoBehaviour
 
         player.SetInput(h, v, mouseX * mouseSensetivity);
         player.RotateX(-mouseY * mouseSensetivity);
+
         if (space) player.Jump();
 
         SendMove();
@@ -39,4 +54,32 @@ public class Controller : MonoBehaviour
         };
         MultiplayerManager.Instance.SendMessage("move", data);
     }
+
+    private void OnApplicationFocus(bool focusStatus)
+    {
+        if (focusStatus)
+            ActivateCursor(true);
+        else    
+            ActivateCursor(false);
+    }
+
+    private void OnDisable()
+    {
+        ActivateCursor(false);
+    }
+
+    private void ActivateCursor(bool value)
+    {
+        if (value)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            cursorActivated = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            cursorActivated = false;
+        }
+    }
+
 }

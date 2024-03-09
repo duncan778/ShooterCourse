@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 937085109202522945}
   - component: {fileID: 2515017174431524216}
   - component: {fileID: 3707368924573111685}
-  - component: {fileID: -571002435542054252}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -156,18 +155,6 @@ MonoBehaviour:
   animator: {fileID: 1057236387537714630}
   checkFly: {fileID: 2515017174431524216}
   character: {fileID: 4862608659234281529}
---- !u!114 &-571002435542054252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2647080887666779655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01c32acf9e31ee3688ff833b1aecb439, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4842761639597119530
 GameObject:
   m_ObjectHideFlags: 0
