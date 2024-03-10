@@ -36,11 +36,18 @@ public class Controller : MonoBehaviour
 
         bool isShoot = Input.GetMouseButton(0);
 
+        float rotationVelocityX = mouseX * mouseSensetivity;
         player.SetInput(h, v, mouseX * mouseSensetivity);
+        rotationVelocityX /= Time.deltaTime;
+
+        float rotationVelocityY = -mouseY * mouseSensetivity;
         player.RotateX(-mouseY * mouseSensetivity);
+        rotationVelocityY /= Time.deltaTime;
+        
         if (space) player.Jump();
         if (isShoot && gun.TryShoot(out ShootInfo shootInfo)) SendShoot(ref shootInfo);
-        SendMove();
+        
+        SendMove(rotationVelocityX, rotationVelocityY);
     }
 
     private void SendShoot(ref ShootInfo shootInfo)
@@ -50,7 +57,7 @@ public class Controller : MonoBehaviour
         multiplayerManager.SendMessage("shoot", json);
     }
 
-    private void SendMove()
+    private void SendMove(float rotationVelocityX, float rotationVelocityY)
     {
         player.GetMoveInfo(out Vector3 position, out Vector3 velocity, out float rotateX, out float rotateY);
         var data = new Dictionary<string, object>()
@@ -62,7 +69,9 @@ public class Controller : MonoBehaviour
             { "vY", velocity.y},
             { "vZ", velocity.z},
             { "rX", rotateX },
-            { "rY", rotateY }
+            { "rY", rotateY },
+            { "rvX", rotationVelocityX },
+            { "rvY", rotationVelocityY },
         };
         multiplayerManager.SendMessage("move", data);
     }
