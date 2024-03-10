@@ -6,7 +6,7 @@ using UnityEngine;
 public class GunAnimation : MonoBehaviour
 {
     private const string Shooting = "Shoot";
-    [SerializeField] private PlayerGun gun;
+    [SerializeField] private Gun gun;
     [SerializeField] private Animator animator;
 
     private void Start()

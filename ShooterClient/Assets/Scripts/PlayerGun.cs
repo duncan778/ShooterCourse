@@ -3,14 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGun : MonoBehaviour
+public class PlayerGun : Gun
 {
-    [SerializeField] private Bullet bulletPrefab;
     [SerializeField] private Transform bulletPoint;
     [SerializeField] private float bulletSpeed = 20f;
     [SerializeField] private float shootDelay = 0.2f;
-
-    public Action OneShot;
 
     private float lastShootTime;
 
@@ -21,19 +18,18 @@ public class PlayerGun : MonoBehaviour
         if (Time.time - lastShootTime < shootDelay) return false;
 
         Vector3 position = bulletPoint.position;
-        Vector3 direction = bulletPoint.forward;
+        Vector3 velocity = bulletPoint.forward  * bulletSpeed;
 
-        Instantiate(bulletPrefab, position, bulletPoint.rotation).Init(direction, bulletSpeed);
+        Instantiate(bulletPrefab, position, bulletPoint.rotation).Init(velocity);
         lastShootTime = Time.time;   
         OneShot?.Invoke();     
 
-        direction *= bulletSpeed;
         info.pX = position.x;
         info.pY = position.y;
         info.pZ = position.z;
-        info.dX = direction.x;
-        info.dY = direction.y;
-        info.dZ = direction.z;
+        info.dX = velocity.x;
+        info.dY = velocity.y;
+        info.dZ = velocity.z;
 
         return true;
     }

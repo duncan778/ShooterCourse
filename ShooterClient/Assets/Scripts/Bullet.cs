@@ -4,11 +4,29 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private float lifeTime = 5f;
     [SerializeField] private Rigidbody bulletRb;
 
-    public void Init(Vector3 direction, float speed)
+    public void Init(Vector3 velocity)
     {
-        bulletRb.velocity = direction * speed;
+        bulletRb.velocity = velocity;
+        StartCoroutine(DelayDestroy());
+    }
+
+    private IEnumerator DelayDestroy()
+    {
+        yield return new WaitForSecondsRealtime(lifeTime);
+        Destroy();
+    }
+
+    private void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Destroy();
     }
 
 }

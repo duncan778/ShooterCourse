@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private EnemyCharacter character;
+    [SerializeField] private EnemyGun gun;
     private List<float> receiveTimeInterval = new List<float> {0, 0, 0, 0, 0};
     private float lastReceiveTime = 0;
     private Player player;
@@ -18,7 +19,10 @@ public class EnemyController : MonoBehaviour
 
     public void Shoot(in ShootInfo info)
     {
-        
+        Vector3 position = new (info.pX, info.pY, info.pZ);
+        Vector3 velocity = new (info.dX, info.dY, info.dZ);
+
+        gun.Shoot(position, velocity);
     }
 
     public void Destroy()
