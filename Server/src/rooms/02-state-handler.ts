@@ -28,6 +28,13 @@ export class Player extends Schema {
 
     @type("number")
     rY = 0;
+
+    @type("number")
+    rvX = 0;
+
+    @type("number")
+    rvY = 0;
+
 }
 
 export class State extends Schema {
@@ -57,6 +64,8 @@ export class State extends Schema {
         player.vZ = data.vZ;
         player.rX = data.rX;
         player.rY = data.rY;
+        player.rvX = data.rvX;
+        player.rvY = data.rvY;
     }
 }
 
