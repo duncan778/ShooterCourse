@@ -2,12 +2,14 @@ using UnityEngine;
 using Colyseus;
 using System;
 using System.Collections.Generic;
+using GameDevWare.Serialization;
 
 public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 {
     [SerializeField] private PlayerCharacter player;
     [SerializeField] private EnemyController enemy;
 
+    private Dictionary<string, EnemyController> enemies = new();
     private ColyseusRoom<State> room;
 
     protected override void Awake()
@@ -28,6 +30,21 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         room = await Instance.client.JoinOrCreate<State>("state_handler", data);
 
         room.OnStateChange += OnChange;
+        room.OnMessage<string>("Shoot", ApplyShoot);
+    }
+
+    private void ApplyShoot(string jsonShootInfo)
+    {
+        ShootInfo shootInfo = JsonUtility.FromJson<ShootInfo>(jsonShootInfo);
+
+        if (enemies.ContainsKey(shootInfo.key) == false)
+        {
+            Debug.Log("Error: No such shooting enemy");
+            return;
+        }
+        
+        enemies[shootInfo.key].Shoot(shootInfo);
+
     }
 
     private void OnChange(State state, bool isFirstState)
@@ -50,16 +67,22 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         Instantiate(this.player, position, Quaternion.identity);
     }
 
+
     private void CreateEnemy(string key, Player player)
     {
         var position = new Vector3(player.pX, player.pY, player.pZ);
         var enemy = Instantiate(this.enemy, position, Quaternion.identity); 
         enemy.Init(player);   
+        enemies.Add(key, enemy);
     }
 
     private void RemoveEnemy(string key, Player player)
     {
+        if (enemies.ContainsKey(key) == false) return;
 
+        var enemy = enemies[key];
+        enemy.Destroy();
+        enemies.Remove(key);
     }
 
     public void SendMessage(string key, Dictionary<string, object> data)

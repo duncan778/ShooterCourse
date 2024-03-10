@@ -16,6 +16,11 @@ public class EnemyController : MonoBehaviour
         this.player = player;
     }
 
+    public void Shoot(in ShootInfo info)
+    {
+        
+    }
+
     public void Destroy()
     {
         player.OnChange -= OnChange;
