@@ -14,12 +14,27 @@ public class PlayerGun : MonoBehaviour
 
     private float lastShootTime;
 
-    public void Shoot()
+    public bool TryShoot(out ShootInfo info)
     {
-        if (Time.time - lastShootTime < shootDelay) return;
+        info = new ShootInfo();
 
-        Instantiate(bulletPrefab, bulletPoint.position, bulletPoint.rotation).Init(bulletPoint.forward, bulletSpeed);
+        if (Time.time - lastShootTime < shootDelay) return false;
+
+        Vector3 position = bulletPoint.position;
+        Vector3 direction = bulletPoint.forward;
+
+        Instantiate(bulletPrefab, position, bulletPoint.rotation).Init(direction, bulletSpeed);
         lastShootTime = Time.time;   
         OneShot?.Invoke();     
+
+        direction *= bulletSpeed;
+        info.pX = position.x;
+        info.pY = position.y;
+        info.pZ = position.z;
+        info.dX = direction.x;
+        info.dY = direction.y;
+        info.dZ = direction.z;
+
+        return true;
     }
 }

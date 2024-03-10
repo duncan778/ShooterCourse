@@ -67,10 +67,18 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         room.Send(key, data);
     }
 
+    public void SendMessage(string key, string data)
+    {
+        room.Send(key, data);
+    }
+
+
     protected override void OnDestroy() 
     {
         base.OnDestroy();
 
         room.Leave();
     }
+
+    public string GetSessionId() => room.SessionId;
 }

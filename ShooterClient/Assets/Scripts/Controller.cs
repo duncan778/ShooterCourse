@@ -7,12 +7,15 @@ public class Controller : MonoBehaviour
     [SerializeField] PlayerCharacter player;
     [SerializeField] private PlayerGun gun;
     [SerializeField] private float mouseSensetivity = 2f;
+
+    private MultiplayerManager multiplayerManager;
     
     private bool cursorActivated;
 
     private void Start()
     {
         ActivateCursor(true);
+        multiplayerManager = MultiplayerManager.Instance;
     }
 
 
@@ -36,8 +39,15 @@ public class Controller : MonoBehaviour
         player.SetInput(h, v, mouseX * mouseSensetivity);
         player.RotateX(-mouseY * mouseSensetivity);
         if (space) player.Jump();
-        if (isShoot) gun.Shoot();
+        if (isShoot && gun.TryShoot(out ShootInfo shootInfo)) SendShoot(ref shootInfo);
         SendMove();
+    }
+
+    private void SendShoot(ref ShootInfo shootInfo)
+    {
+        shootInfo.key = multiplayerManager.GetSessionId();
+        string json = JsonUtility.ToJson(shootInfo);
+        multiplayerManager.SendMessage("shoot", json);
     }
 
     private void SendMove()
@@ -54,7 +64,7 @@ public class Controller : MonoBehaviour
             { "rX", rotateX },
             { "rY", rotateY }
         };
-        MultiplayerManager.Instance.SendMessage("move", data);
+        multiplayerManager.SendMessage("move", data);
     }
 
     private void OnApplicationFocus(bool focusStatus)
@@ -84,4 +94,17 @@ public class Controller : MonoBehaviour
         }
     }
 
+}
+
+[System.Serializable]
+public struct ShootInfo
+{
+    public string key;
+    public float pX;
+    public float pY;
+    public float pZ;
+    public float dX;
+    public float dY;
+    public float dZ;
+    
 }
