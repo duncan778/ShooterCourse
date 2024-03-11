@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed6bd566615a8b25ab8a2cacb12baec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 2
+  <Speed>k__BackingField: 5
   playerRb: {fileID: -3293169683671667313}
   head: {fileID: 6147359626354666334}
   cameraPoint: {fileID: 3402806384440516645}

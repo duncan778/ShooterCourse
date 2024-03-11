@@ -59,6 +59,13 @@ public class EnemyController : MonoBehaviour
 
         Vector3 position = character.TargetPosition;
         Vector3 velocity = character.Velocity;
+        
+        float rotationX = character.RotationX;
+        float rotationY = character.RotationY;
+
+        float rotationVelocityX = character.RotationVelocityX;
+        float rotationVelocityY = character.RotationVelocityY;
+        
         foreach (var dataChange in changes)
         {
             switch (dataChange.Field)
@@ -82,11 +89,18 @@ public class EnemyController : MonoBehaviour
                     velocity.z = (float)dataChange.Value;
                     break;
                 case "rX":
-                    character.SetRotateX((float)dataChange.Value);
+                    rotationX = (float)dataChange.Value;
                     break;
                 case "rY":
-                    character.SetRotateY((float)dataChange.Value);
+                    rotationY = (float)dataChange.Value;
                     break;
+                case "rvX":
+                    rotationVelocityX = (float)dataChange.Value;
+                    break;
+                case "rvY":
+                    rotationVelocityY = (float)dataChange.Value;
+                    break;
+
 
                 default:
                     Debug.LogWarning("Не обрабатывается изменение поля " + dataChange.Field);
@@ -94,5 +108,7 @@ public class EnemyController : MonoBehaviour
             }
         }
         character.SetMovement(position, velocity, AverageInterval);
+        character.SetRotateX(rotationX, rotationVelocityX, AverageInterval);
+        character.SetRotateY(rotationY, rotationVelocityY, AverageInterval);
     }
 }

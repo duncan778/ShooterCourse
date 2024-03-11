@@ -36,13 +36,13 @@ public class Controller : MonoBehaviour
 
         bool isShoot = Input.GetMouseButton(0);
 
-        float rotationVelocityX = mouseX * mouseSensetivity;
-        player.SetInput(h, v, mouseX * mouseSensetivity);
-        rotationVelocityX /= Time.deltaTime;
-
-        float rotationVelocityY = -mouseY * mouseSensetivity;
-        player.RotateX(-mouseY * mouseSensetivity);
+        float rotationVelocityY = mouseX * mouseSensetivity;
+        player.SetInput(h, v, rotationVelocityY);
         rotationVelocityY /= Time.deltaTime;
+
+        float rotationVelocityX = -mouseY * mouseSensetivity;
+        player.RotateX(rotationVelocityX);
+        rotationVelocityX /= Time.deltaTime;
         
         if (space) player.Jump();
         if (isShoot && gun.TryShoot(out ShootInfo shootInfo)) SendShoot(ref shootInfo);

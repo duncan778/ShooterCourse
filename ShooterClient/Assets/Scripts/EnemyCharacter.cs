@@ -4,11 +4,16 @@ public class EnemyCharacter : Character
 {
     [SerializeField] private Transform head;
     public Vector3 TargetPosition { get; private set; } = Vector3.zero;
+    public float TargetRotationY { get; private set; } = 0;
+    public float TargetRotationX { get; private set; } = 0;
+
     private float velocityMagnitude = 0;
 
     private void Start()
     {
         TargetPosition = transform.position;
+        TargetRotationY = transform.eulerAngles.y;
+        TargetRotationX = head.localEulerAngles.x;
     }
 
     private void Update()
@@ -20,6 +25,20 @@ public class EnemyCharacter : Character
         }
         else
             transform.position = TargetPosition;
+
+        if (Mathf.Abs(RotationVelocityY) > 0.01f)
+            transform.localEulerAngles = Quaternion.Lerp(transform.localRotation, 
+                                                        Quaternion.Euler(new(0, TargetRotationY, 0)), 
+                                                        Time.deltaTime * Mathf.Abs(RotationVelocityY)).eulerAngles;
+        else
+            transform.localEulerAngles = new(0, TargetRotationY, 0);
+
+        if (Mathf.Abs(RotationVelocityX) > 0.01f)
+            head.localEulerAngles = Quaternion.Lerp(head.localRotation, 
+                                                    Quaternion.Euler(new(TargetRotationX, 0, 0)), 
+                                                    Time.deltaTime * Mathf.Abs(RotationVelocityX)).eulerAngles;
+        else
+            head.localEulerAngles = new(TargetRotationX, 0, 0);
     }
 
     public void SetSpeed(float value) => Speed = value;
@@ -32,13 +51,19 @@ public class EnemyCharacter : Character
         Velocity = velocity;
     }
 
-    public void SetRotateY(float value)
+    public void SetRotateY(float rotationY, float rotationVelocityY, float averageInterval)
     {
-        transform.localEulerAngles = new(0, value, 0);
+        TargetRotationY = rotationY + (rotationVelocityY * Time.deltaTime * averageInterval);
+        
+        RotationY = rotationY;
+        RotationVelocityY = rotationVelocityY;
     }
 
-    public void SetRotateX(float value)
+    public void SetRotateX(float rotationX, float rotationVelocityX, float averageInterval)
     {
-        head.localEulerAngles = new(value, 0, 0);
+        TargetRotationX = rotationX + (-rotationVelocityX * Time.deltaTime * averageInterval);
+
+        RotationX = rotationX;
+        RotationVelocityX = rotationVelocityX;
     }
 }
