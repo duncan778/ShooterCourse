@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
     {
         player.OnChange += OnChange;
         character.SetSpeed(player.speed);
+        character.SetMaxHP(player.hp);
         this.player = player;
     }
 
