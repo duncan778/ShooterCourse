@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyCharacter : Character
@@ -6,10 +7,16 @@ public class EnemyCharacter : Character
     [SerializeField] private Transform head;
     public Vector3 TargetPosition { get; private set; } = Vector3.zero;
     private float velocityMagnitude = 0;
+    private string sessionID;
 
     private void Start()
     {
         TargetPosition = transform.position;
+    }
+
+    public void Init(string sessionID)
+    {
+        this.sessionID = sessionID;
     }
 
     private void Update()
@@ -42,6 +49,12 @@ public class EnemyCharacter : Character
     public void ApplyDamage(int damage)
     {
         health.ApplyDamage(damage);
+        Dictionary<string, object> data = new() 
+        {
+            {"id", sessionID},
+            {"value", damage}
+        };
+        MultiplayerManager.Instance.SendMessage("damage", data);
     }
 
     public void SetRotateY(float value)

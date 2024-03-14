@@ -65,7 +65,8 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     private void CreatePlayer(Player player)
     {
         var position = new Vector3(player.pX, player.pY, player.pZ);
-        Instantiate(this.player, position, Quaternion.identity);
+
+        player.OnChange += Instantiate(this.player, position, Quaternion.identity).OnChange;
     }
 
 
@@ -73,7 +74,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     {
         var position = new Vector3(player.pX, player.pY, player.pZ);
         var enemy = Instantiate(this.enemy, position, Quaternion.identity); 
-        enemy.Init(player);   
+        enemy.Init(key, player);   
         enemies.Add(key, enemy);
     }
 
