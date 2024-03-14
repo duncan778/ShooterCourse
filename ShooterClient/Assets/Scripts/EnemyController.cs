@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
     public void Init(string key, Player player)
     {
         character.Init(key);
-        
+
         player.OnChange += OnChange;
         character.SetSpeed(player.speed);
         character.SetMaxHP(player.maxHP);
@@ -66,6 +66,13 @@ public class EnemyController : MonoBehaviour
         {
             switch (dataChange.Field)
             {
+                case "loss":
+                    MultiplayerManager.Instance.lossCounter.SetEnemyLoss((ushort)dataChange.Value);
+                    break;
+                case "currentHP":
+                    if ((sbyte)dataChange.Value > (sbyte)dataChange.PreviousValue)
+                        character.RestoreHP((sbyte)dataChange.Value);
+                    break;
                 case "pX":
                     position.x = (float)dataChange.Value;
                     break;

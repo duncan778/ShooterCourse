@@ -1,11 +1,10 @@
 using UnityEngine;
 using Colyseus;
-using System;
 using System.Collections.Generic;
-using GameDevWare.Serialization;
 
 public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 {
+    [field: SerializeField] public LossCounter lossCounter { get; private set; }
     [SerializeField] private PlayerCharacter player;
     [SerializeField] private EnemyController enemy;
 
@@ -66,7 +65,9 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     {
         var position = new Vector3(player.pX, player.pY, player.pZ);
 
-        player.OnChange += Instantiate(this.player, position, Quaternion.identity).OnChange;
+        var playerCharacter = Instantiate(this.player, position, Quaternion.identity);
+        player.OnChange += playerCharacter.OnChange;
+        room.OnMessage<string>("Restart", playerCharacter.GetComponent<Controller>().Restart);
     }
 
 

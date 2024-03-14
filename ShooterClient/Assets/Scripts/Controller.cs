@@ -1,15 +1,18 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
+    [SerializeField] private float restartDelay = 3f;
     [SerializeField] PlayerCharacter player;
     [SerializeField] private PlayerGun gun;
     [SerializeField] private float mouseSensetivity = 2f;
 
     private MultiplayerManager multiplayerManager;
-    
+    private bool hold = false;
     private bool cursorActivated;
 
     private void Start()
@@ -21,6 +24,8 @@ public class Controller : MonoBehaviour
 
     void Update()
     {
+        if (hold) return;
+
         if (Input.GetKey(KeyCode.Escape)) ActivateCursor(false);
         else if (!cursorActivated && Input.GetMouseButtonDown(0)) ActivateCursor(true);
         
@@ -94,6 +99,34 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public void Restart(string jsonRestartInfo)
+    {
+        RestartInfo info = JsonUtility.FromJson<RestartInfo>(jsonRestartInfo);
+        StartCoroutine(Hold());
+
+        player.transform.position = new(info.x, 0, info.z);
+        player.SetInput(0, 0, 0);
+        
+        var data = new Dictionary<string, object>()
+        {
+            { "pX", info.x },
+            { "pY", 0 },
+            { "pZ", info.z },
+            { "vX", 0 },
+            { "vY", 0 },
+            { "vZ", 0 },
+            { "rX", 0 },
+            { "rY", 0 }
+        };
+        multiplayerManager.SendMessage("move", data);
+    }
+
+    private IEnumerator Hold()
+    {
+        hold = true;
+        yield return new WaitForSecondsRealtime(restartDelay);
+        hold = false;
+    }
 }
 
 [System.Serializable]
@@ -106,5 +139,11 @@ public struct ShootInfo
     public float dX;
     public float dY;
     public float dZ;
-    
+}
+
+[System.Serializable]
+public struct RestartInfo
+{
+    public float x;
+    public float z;
 }
