@@ -1,11 +1,10 @@
 using UnityEngine;
 using Colyseus;
-using System;
 using System.Collections.Generic;
-using GameDevWare.Serialization;
 
 public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 {
+    [field: SerializeField] public LossCounter lossCounter { get; private set; }
     [SerializeField] private PlayerCharacter player;
     [SerializeField] private EnemyController enemy;
 
@@ -24,7 +23,8 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     {
         Dictionary<string, object> data = new()
         {
-            {"speed", player.Speed}
+            {"speed", player.Speed},
+            {"hp", player.MaxHealth},
         };
 
         room = await Instance.client.JoinOrCreate<State>("state_handler", data);
@@ -64,7 +64,10 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     private void CreatePlayer(Player player)
     {
         var position = new Vector3(player.pX, player.pY, player.pZ);
-        Instantiate(this.player, position, Quaternion.identity);
+
+        var playerCharacter = Instantiate(this.player, position, Quaternion.identity);
+        player.OnChange += playerCharacter.OnChange;
+        room.OnMessage<string>("Restart", playerCharacter.GetComponent<Controller>().Restart);
     }
 
 
@@ -72,7 +75,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     {
         var position = new Vector3(player.pX, player.pY, player.pZ);
         var enemy = Instantiate(this.enemy, position, Quaternion.identity); 
-        enemy.Init(player);   
+        enemy.Init(key, player);   
         enemies.Add(key, enemy);
     }
 
