@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerGun : Gun
 {
     [SerializeField] private int damage;
-    [SerializeField] private Transform bulletPoint;
     [SerializeField] private float bulletSpeed = 20f;
     [SerializeField] private float shootDelay = 0.2f;
 
@@ -18,10 +17,10 @@ public class PlayerGun : Gun
 
         if (Time.time - lastShootTime < shootDelay) return false;
 
-        Vector3 position = bulletPoint.position;
-        Vector3 velocity = bulletPoint.forward  * bulletSpeed;
+        Vector3 position = BulletPoint.position;
+        Vector3 velocity = BulletPoint.forward  * bulletSpeed;
 
-        Instantiate(bulletPrefab, position, bulletPoint.rotation).Init(velocity, damage);
+        Instantiate(bulletPrefab, position, BulletPoint.rotation).Init(velocity, damage);
         lastShootTime = Time.time;   
         OneShot?.Invoke();     
 
@@ -33,5 +32,11 @@ public class PlayerGun : Gun
         info.dZ = velocity.z;
 
         return true;
+    }
+
+    internal void ChangeGun(float mouseWheelDirection)
+    {
+        if (mouseWheelDirection > 0) NextGun();
+        else PrevGun();
     }
 }
