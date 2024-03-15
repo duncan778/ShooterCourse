@@ -11,37 +11,56 @@ public abstract class Gun : MonoBehaviour
 
     public Action OneShot;
 
-    private int currentGunIndex = 0;
+    public int CurrentGunIndex { get; private set; } = 0;
     private GameObject currentGunModel;
 
     private void Start()
     {
-        currentGunModel = gunModels[currentGunIndex];
+        SetModel();
     }
 
     private void SetModel()
     {
-        currentGunModel.SetActive(false);
-        currentGunModel = gunModels[currentGunIndex];
+        currentGunModel?.SetActive(false);
+        currentGunModel = gunModels[CurrentGunIndex];
         currentGunModel.SetActive(true);
     }
 
-    public void NextGun()
+    private void NextGunIndex()
     {
-        currentGunIndex++;
-        if (currentGunIndex >= gunModels.Length)
-            currentGunIndex = 0;
+        CurrentGunIndex++;
+        if (CurrentGunIndex >= gunModels.Length)
+            CurrentGunIndex = 0;
+            }
+
+    private void PrevGunIndex()
+    {
+        CurrentGunIndex--;
+        if (CurrentGunIndex <= 0)
+            CurrentGunIndex = gunModels.Length - 1;
+    }
+
+    public void ChangeGun(float mouseWheelDirection)
+    {
+        if (mouseWheelDirection > 0) NextGunIndex();
+        else PrevGunIndex();
         
         SetModel();
+        SendGunModel();
     }
 
-    public void PrevGun()
+    private void SendGunModel()
     {
-        currentGunIndex--;
-        if (currentGunIndex <= 0)
-            currentGunIndex = gunModels.Length - 1;
+        var data = new Dictionary<string, object>()
+        {
+            { "id", CurrentGunIndex },
+        };
+        MultiplayerManager.Instance.SendMessage("gun", data);
+    }
 
+    public void ChangeGun(int gunIndex)
+    {
+        CurrentGunIndex = gunIndex;
         SetModel();
     }
-
 }

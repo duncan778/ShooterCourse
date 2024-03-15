@@ -25,6 +25,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         {
             {"speed", player.Speed},
             {"hp", player.MaxHealth},
+            {"gunID", player.GetComponent<Gun>().CurrentGunIndex}
         };
 
         room = await Instance.client.JoinOrCreate<State>("state_handler", data);

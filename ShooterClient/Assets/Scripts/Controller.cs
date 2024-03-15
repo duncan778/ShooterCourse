@@ -38,11 +38,9 @@ public class Controller : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y");
 
         bool space = Input.GetKeyDown(KeyCode.Space);
-
         bool isShoot = Input.GetMouseButton(0);
-
-        float mouseWheel = (Input.GetAxis("Mouse ScrollWheel"));
-        
+        float mouseWheel = Input.GetAxis("Mouse ScrollWheel");
+    
 
         player.SetInput(h, v, mouseX * mouseSensetivity);
         player.RotateX(-mouseY * mouseSensetivity);
