@@ -1,7 +1,15 @@
 import { Room, Client } from "colyseus";
 import { Schema, type, MapSchema } from "@colyseus/schema";
 
+export class Level extends Schema {
+    @type("int8")
+    spawnPoints = 0;
+}
+
 export class Player extends Schema {
+    @type("int8")
+    spawnID = 0;
+    
     @type("int8")
     gunID = 0;
     
@@ -18,13 +26,13 @@ export class Player extends Schema {
     speed = 0;
 
     @type("number")
-    pX = Math.floor(Math.random() * 50) - 25;
+    pX = 0;
 
     @type("number")
     pY = 0;
 
     @type("number")
-    pZ = Math.floor(Math.random() * 50) - 25;
+    pZ = 0;
 
     @type("number")
     vX = 0;
@@ -45,11 +53,13 @@ export class Player extends Schema {
 export class State extends Schema {
     @type({ map: Player })
     players = new MapSchema<Player>();
-
+    level = new Level();
+    
     something = "This attribute won't be sent to the client-side";
 
     createPlayer(sessionId: string, data: any) {
         const player = new Player();
+        player.spawnID = Math.floor(Math.random() * this.level.spawnPoints);
         player.maxHP = data.hp;
         player.currentHP = data.hp;
         player.speed = data.speed;
@@ -131,6 +141,10 @@ export class StateHandlerRoom extends Room<State> {
     onJoin (client: Client, data: any) {
         if (this.clients.length > 1) this.lock();
         client.send("hello", "world");
+
+        if (this.state.level.spawnPoints == 0)
+            this.state.level.spawnPoints = data.spawns;
+        
         this.state.createPlayer(client.sessionId, data);
     }
 

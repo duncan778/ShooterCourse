@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 {
+    [SerializeField] private LevelEnvironment level;
     [field: SerializeField] public LossCounter lossCounter { get; private set; }
     [SerializeField] private PlayerCharacter player;
     [SerializeField] private EnemyController enemy;
@@ -23,9 +24,10 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     {
         Dictionary<string, object> data = new()
         {
-            {"speed", player.Speed},
-            {"hp", player.MaxHealth},
-            {"gunID", player.GetComponent<Gun>().CurrentGunIndex}
+            { "spawns", level.SpawnPoints.Length },
+            { "speed", player.Speed },
+            { "hp", player.MaxHealth },
+            { "gunID", player.GetComponent<Gun>().CurrentGunIndex }
         };
 
         room = await Instance.client.JoinOrCreate<State>("state_handler", data);
@@ -64,7 +66,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     private void CreatePlayer(Player player)
     {
-        var position = new Vector3(player.pX, player.pY, player.pZ);
+        var position = level.SpawnPoints[player.spawnID].position;
 
         var playerCharacter = Instantiate(this.player, position, Quaternion.identity);
         player.OnChange += playerCharacter.OnChange;
