@@ -41,10 +41,14 @@ public class Controller : MonoBehaviour
 
         bool isShoot = Input.GetMouseButton(0);
 
+        float mouseWheel = (Input.GetAxis("Mouse ScrollWheel"));
+        
+
         player.SetInput(h, v, mouseX * mouseSensetivity);
         player.RotateX(-mouseY * mouseSensetivity);
         if (space) player.Jump();
         if (isShoot && gun.TryShoot(out ShootInfo shootInfo)) SendShoot(ref shootInfo);
+        if (mouseWheel != 0) gun.ChangeGun(mouseWheel);
         SendMove();
     }
 
