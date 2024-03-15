@@ -58,9 +58,6 @@ public class PlayerCharacter : Character
 
     void Move()
     {
-        // Vector3 direction = new Vector3(inputH, 0, inputV).normalized;
-        // transform.position += direction * Time.deltaTime * speed;
-
         Vector3 velocity = (transform.forward * inputV + transform.right * inputH).normalized * Speed;
         velocity.y = playerRb.velocity.y;
         Velocity = velocity;
@@ -91,7 +88,7 @@ public class PlayerCharacter : Character
             switch (dataChange.Field)
             {
                 case "loss":
-                    MultiplayerManager.Instance.lossCounter.SetPlayerLoss((ushort)dataChange.Value);
+                    MultiplayerManager.Instance.LossCounter.SetPlayerLoss((ushort)dataChange.Value);
                     break;
                 case "currentHP":
                     health.SetCurrent((sbyte)dataChange.Value);

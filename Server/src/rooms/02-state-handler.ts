@@ -6,10 +6,7 @@ export class Level extends Schema {
     spawnPoints = 0;
 }
 
-export class Player extends Schema {
-    @type("int8")
-    spawnID = 0;
-    
+export class Player extends Schema {    
     @type("int8")
     gunID = 0;
     
@@ -59,7 +56,6 @@ export class State extends Schema {
 
     createPlayer(sessionId: string, data: any) {
         const player = new Player();
-        player.spawnID = Math.floor(Math.random() * this.level.spawnPoints);
         player.maxHP = data.hp;
         player.currentHP = data.hp;
         player.speed = data.speed;
@@ -119,11 +115,8 @@ export class StateHandlerRoom extends Room<State> {
             for (let i = 0; i < this.clients.length; i++) {
                 if (this.clients[i].sessionId != clientID) continue;
                 
-                const x = Math.floor(Math.random() * 50) - 25;
-                const z = Math.floor(Math.random() * 50) - 25;
-
-                const message = JSON.stringify({x, z});
-                this.clients[i].send("Restart", message);
+                let spawnIndex = Math.floor(Math.random() * this.state.level.spawnPoints);
+                this.clients[i].send("Restart", spawnIndex);
             }
         });
 

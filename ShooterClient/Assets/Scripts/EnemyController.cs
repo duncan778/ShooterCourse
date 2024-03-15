@@ -70,7 +70,7 @@ public class EnemyController : MonoBehaviour
                     gun.ChangeGun((sbyte)dataChange.Value);
                     break;
                 case "loss":
-                    MultiplayerManager.Instance.lossCounter.SetEnemyLoss((ushort)dataChange.Value);
+                    MultiplayerManager.Instance.LossCounter.SetEnemyLoss((ushort)dataChange.Value);
                     break;
                 case "currentHP":
                     if ((sbyte)dataChange.Value > (sbyte)dataChange.PreviousValue)

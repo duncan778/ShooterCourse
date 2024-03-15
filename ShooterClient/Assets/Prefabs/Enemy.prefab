@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 10
-  <Speed>k__BackingField: 2
+  <Speed>k__BackingField: 6
   health: {fileID: 2296377771234585014}
   head: {fileID: 8959647802593320758}
 --- !u!114 &-2673800919989353267

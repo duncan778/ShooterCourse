@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 10
-  <Speed>k__BackingField: 2
+  <Speed>k__BackingField: 6
   health: {fileID: 8688300749111615811}
   playerRb: {fileID: -3293169683671667313}
   head: {fileID: 6147359626354666334}
@@ -173,7 +173,6 @@ MonoBehaviour:
   player: {fileID: 4862608659234281529}
   gun: {fileID: 7704578577980447134}
   mouseSensetivity: 10
-  mouseWheelScale: 200
 --- !u!54 &-3293169683671667313
 Rigidbody:
   m_ObjectHideFlags: 0

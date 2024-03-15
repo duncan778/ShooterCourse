@@ -446,6 +446,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4862608659234281529, guid: 2653d8ed8668c35cb949b786e6dccace,
+        type: 3}
+      propertyPath: <Speed>k__BackingField
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -496,8 +501,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _colyseusSettings: {fileID: 11400000, guid: d6fbcee34fba71e88916ac33b00901e1, type: 2}
-  level: {fileID: 1086660395}
-  <lossCounter>k__BackingField: {fileID: 1351015855}
+  <Level>k__BackingField: {fileID: 1086660395}
+  <LossCounter>k__BackingField: {fileID: 1351015855}
   player: {fileID: 4862608659234281529, guid: 2653d8ed8668c35cb949b786e6dccace, type: 3}
   enemy: {fileID: -2673800919989353267, guid: a4cf71689c23f4db2b5d7c13ee65b4c6, type: 3}
 --- !u!114 &1086660395 stripped

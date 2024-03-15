@@ -101,19 +101,19 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public void Restart(string jsonRestartInfo)
+    public void Restart(string spawnIndex)
     {
-        RestartInfo info = JsonUtility.FromJson<RestartInfo>(jsonRestartInfo);
+        if (Int16.TryParse(spawnIndex, out short index))
+            player.transform.position = multiplayerManager.Level.SpawnPoints[index].position;
         StartCoroutine(Hold());
 
-        player.transform.position = new(info.x, 0, info.z);
         player.SetInput(0, 0, 0);
         
         var data = new Dictionary<string, object>()
         {
-            { "pX", info.x },
-            { "pY", 0 },
-            { "pZ", info.z },
+            { "pX", player.transform.position.x },
+            { "pY", player.transform.position.y },
+            { "pZ", player.transform.position.z },
             { "vX", 0 },
             { "vY", 0 },
             { "vZ", 0 },
