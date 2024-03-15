@@ -15,10 +15,14 @@ public class Controller : MonoBehaviour
     private bool hold = false;
     private bool cursorActivated;
 
+    private void Awake()
+    {
+        multiplayerManager = MultiplayerManager.Instance;
+    }
+
     private void Start()
     {
         ActivateCursor(true);
-        multiplayerManager = MultiplayerManager.Instance;
     }
 
 
@@ -105,6 +109,7 @@ public class Controller : MonoBehaviour
     {
         if (Int16.TryParse(spawnIndex, out short index))
             player.transform.position = multiplayerManager.Level.SpawnPoints[index].position;
+        
         StartCoroutine(Hold());
 
         player.SetInput(0, 0, 0);

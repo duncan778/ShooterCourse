@@ -66,10 +66,10 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     private void CreatePlayer(Player player)
     {
-        int spawnIndex = Random.Range(0, Level.SpawnPoints.Length);
-        var position = Level.SpawnPoints[spawnIndex].position;
+        // int spawnIndex = Random.Range(0, Level.SpawnPoints.Length);
+        // var position = Level.SpawnPoints[spawnIndex].position;
 
-        var playerCharacter = Instantiate(this.player, position, Quaternion.identity);
+        var playerCharacter = Instantiate(this.player, Vector3.zero, Quaternion.identity);
         player.OnChange += playerCharacter.OnChange;
         room.OnMessage<string>("Restart", playerCharacter.GetComponent<Controller>().Restart);
     }

@@ -139,6 +139,9 @@ export class StateHandlerRoom extends Room<State> {
             this.state.level.spawnPoints = data.spawns;
         
         this.state.createPlayer(client.sessionId, data);
+
+        let spawnIndex = Math.floor(Math.random() * this.state.level.spawnPoints);
+        client.send("Restart", spawnIndex);
     }
 
     onLeave (client) {
