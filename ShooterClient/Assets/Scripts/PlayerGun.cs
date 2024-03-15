@@ -34,9 +34,4 @@ public class PlayerGun : Gun
         return true;
     }
 
-    internal void ChangeGun(float mouseWheelDirection)
-    {
-        if (mouseWheelDirection > 0) NextGun();
-        else PrevGun();
-    }
 }

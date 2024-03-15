@@ -11,6 +11,9 @@ public partial class Player : Schema {
 	[Type(0, "uint8")]
 	public byte skin = default(byte);
 
+	[Type(1, "int8")]
+	public sbyte gunID = default(sbyte);
+
 	[Type(1, "uint16")]
 	public ushort loss = default(ushort);
 

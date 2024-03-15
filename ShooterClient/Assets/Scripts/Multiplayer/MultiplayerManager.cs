@@ -36,6 +36,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
             { "pY", spawnPosition.y },
             { "pZ", spawnPosition.z },
             { "rY", spawnRotation.y },
+            {"gunID", player.GetComponent<Gun>().CurrentGunIndex}
         };
 
         room = await Instance.client.JoinOrCreate<State>("state_handler", data);

@@ -5,6 +5,9 @@ export class Player extends Schema {
     @type("uint8")
     skin = 0;
 
+    @type("int8")
+    gunID = 0;
+    
     @type("uint16")
     loss = 0;
 
@@ -58,6 +61,7 @@ export class State extends Schema {
         player.pY = data.pY;
         player.pZ = data.pZ;
         player.rY = data.rY;
+        player.gunID = data.gunID;
 
         this.players.set(sessionId, player);
     }
