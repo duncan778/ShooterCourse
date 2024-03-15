@@ -67,6 +67,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     private void CreatePlayer(Player player)
     {
         var playerCharacter = Instantiate(this.player, Vector3.zero, Quaternion.identity);
+        playerCharacter.gameObject.SetActive(false);
         player.OnChange += playerCharacter.OnChange;
         room.OnMessage<string>("Restart", playerCharacter.GetComponent<Controller>().Restart);
     }

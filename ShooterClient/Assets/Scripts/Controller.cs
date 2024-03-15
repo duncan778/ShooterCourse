@@ -110,6 +110,7 @@ public class Controller : MonoBehaviour
         if (Int16.TryParse(spawnIndex, out short index))
             player.transform.position = multiplayerManager.Level.SpawnPoints[index].position;
         
+        player.gameObject.SetActive(true);
         StartCoroutine(Hold());
 
         player.SetInput(0, 0, 0);
