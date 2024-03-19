@@ -15,13 +15,13 @@ export class Player extends Schema {
     speed = 0;
 
     @type("number")
-    pX = Math.floor(Math.random() * 50) - 25;
+    pX = 0;
 
     @type("number")
     pY = 0;
 
     @type("number")
-    pZ = Math.floor(Math.random() * 50) - 25;
+    pZ = 0;
 
     @type("number")
     vX = 0;
@@ -50,6 +50,10 @@ export class State extends Schema {
         player.maxHP = data.hp;
         player.currentHP = data.hp;
         player.speed = data.speed;
+        player.pX = data.pX;
+        player.pY = data.pY;
+        player.pZ = data.pZ;
+        player.rY = data.rY;
 
         this.players.set(sessionId, player);
     }
@@ -73,8 +77,10 @@ export class State extends Schema {
 
 export class StateHandlerRoom extends Room<State> {
     maxClients = 2;
+    spawnPointCount = 1;
 
     onCreate (options) {
+        this.spawnPointCount = options.points;
         console.log("StateHandlerRoom created!", options);
 
         this.setState(new State());
@@ -105,11 +111,10 @@ export class StateHandlerRoom extends Room<State> {
             for (let i = 0; i < this.clients.length; i++) {
                 if (this.clients[i].sessionId != clientID) continue;
                 
-                const x = Math.floor(Math.random() * 50) - 25;
+                const point = Math.floor(Math.random() * this.spawnPointCount);
                 const z = Math.floor(Math.random() * 50) - 25;
 
-                const message = JSON.stringify({x, z});
-                this.clients[i].send("Restart", message);
+                this.clients[i].send("Restart", point);
             }
         });
     }

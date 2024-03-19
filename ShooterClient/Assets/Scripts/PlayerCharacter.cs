@@ -91,7 +91,7 @@ public class PlayerCharacter : Character
             switch (dataChange.Field)
             {
                 case "loss":
-                    MultiplayerManager.Instance.lossCounter.SetPlayerLoss((ushort)dataChange.Value);
+                    MultiplayerManager.Instance.LossCounter.SetPlayerLoss((ushort)dataChange.Value);
                     break;
                 case "currentHP":
                     health.SetCurrent((sbyte)dataChange.Value);

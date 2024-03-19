@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 {
-    [field: SerializeField] public LossCounter lossCounter { get; private set; }
+    [field: SerializeField] public LossCounter LossCounter { get; private set; }
+    [field: SerializeField] public SpawnPoints SpawnPoints { get; private set; }
     [SerializeField] private PlayerCharacter player;
     [SerializeField] private EnemyController enemy;
 
@@ -21,10 +22,17 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     private async void Connect()
     {
+        SpawnPoints.GetPoint(Random.Range(0, SpawnPoints.Length), out Vector3 spawnPosition, out Vector3 spawnRotation);
+
         Dictionary<string, object> data = new()
         {
-            {"speed", player.Speed},
-            {"hp", player.MaxHealth},
+            { "points", SpawnPoints.Length },
+            { "speed", player.Speed },
+            { "hp", player.MaxHealth },
+            { "pX", spawnPosition.x },
+            { "pY", spawnPosition.y },
+            { "pZ", spawnPosition.z },
+            { "rY", spawnRotation.y },
         };
 
         room = await Instance.client.JoinOrCreate<State>("state_handler", data);
@@ -64,10 +72,11 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     private void CreatePlayer(Player player)
     {
         var position = new Vector3(player.pX, player.pY, player.pZ);
+        Quaternion rotation = Quaternion.Euler(0, player.rY, 0);
 
-        var playerCharacter = Instantiate(this.player, position, Quaternion.identity);
+        var playerCharacter = Instantiate(this.player, position, rotation);
         player.OnChange += playerCharacter.OnChange;
-        room.OnMessage<string>("Restart", playerCharacter.GetComponent<Controller>().Restart);
+        room.OnMessage<int>("Restart", playerCharacter.GetComponent<Controller>().Restart);
     }
 
 
