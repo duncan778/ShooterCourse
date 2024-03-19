@@ -98,7 +98,7 @@ public class PlayerCharacter : Character
                     break;
 
                 default:
-                    Debug.LogWarning("Не обрабатывается изменение поля " + dataChange.Field);
+                    //Debug.LogWarning("Не обрабатывается изменение поля " + dataChange.Field);
                     break;
             }
         }
