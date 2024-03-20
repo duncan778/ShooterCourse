@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
     [SerializeField] private HealthUI ui;
     private int max;
     private int current;
+    public int Current { get { return current; } }
 
     public void SetMax(int max)
     {
@@ -30,4 +31,5 @@ public class Health : MonoBehaviour
     {
         ui.UpdateHealth(max, current);
     }
+
 }

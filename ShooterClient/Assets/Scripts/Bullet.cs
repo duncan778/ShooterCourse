@@ -29,8 +29,11 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (other.collider.TryGetComponent(out EnemyCharacter enemy))
-        {
             enemy.ApplyDamage(damage);
+        else if (other.collider.TryGetComponent(out EnemyHead enemyHead))
+        {
+            enemyHead.Explosion(transform.rotation);
+            enemyHead.GetComponentInParent<EnemyCharacter>().ApplyFullDamage();
         }
 
         Destroy();

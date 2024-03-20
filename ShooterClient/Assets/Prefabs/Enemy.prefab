@@ -295,10 +295,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.45
+  m_Height: 1.25
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.625, z: 0}
 --- !u!114 &7462913959735559200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +394,37 @@ MonoBehaviour:
   - {fileID: 7819534617721374224}
   - {fileID: 5112544950913058754}
   - {fileID: 7935715567611246048}
+--- !u!1 &6601361584106201635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7480445103332057605}
+  m_Layer: 0
+  m_Name: HeadShotPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7480445103332057605
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6601361584106201635}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071064, y: -0, z: -0, w: 0.70710725}
+  m_LocalPosition: {x: 0, y: 0, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8959647802593320758}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &7756153808163315908
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,11 +571,23 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6263052339334394875}
+    - targetCorrespondingSourceObject: {fileID: 6128295628213254845, guid: 5b9e5150db7b2204d98b5f69a683d1e6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7480445103332057605}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5773215855315535954, guid: 5b9e5150db7b2204d98b5f69a683d1e6,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1139939881829641678}
+    - targetCorrespondingSourceObject: {fileID: 4910384957521570809, guid: 5b9e5150db7b2204d98b5f69a683d1e6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5277787890692302839}
+    - targetCorrespondingSourceObject: {fileID: 4910384957521570809, guid: 5b9e5150db7b2204d98b5f69a683d1e6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7748040414837539497}
     - targetCorrespondingSourceObject: {fileID: 4874820608474953760, guid: 5b9e5150db7b2204d98b5f69a683d1e6,
         type: 3}
       insertIndex: -1
@@ -631,6 +674,49 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 2979980334375232907}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7889802186650766962 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4910384957521570809, guid: 5b9e5150db7b2204d98b5f69a683d1e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2979980334375232907}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &5277787890692302839
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7889802186650766962}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.45
+  m_Center: {x: 0, y: 0, z: 0.4}
+--- !u!114 &7748040414837539497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7889802186650766962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d36aa378d3dd7d3afd7a5a5abc0ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headshotPoint: {fileID: 7480445103332057605}
+  headShotVFX: {fileID: 7788618341026609880, guid: 102452ea9f5e1c0dfab10890fa10b70e,
+    type: 3}
+  headMesh: {fileID: 7935715567611246048}
 --- !u!23 &7935715567611246048 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 5150524850654449771, guid: 5b9e5150db7b2204d98b5f69a683d1e6,

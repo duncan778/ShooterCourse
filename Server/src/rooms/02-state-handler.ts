@@ -133,8 +133,7 @@ export class StateHandlerRoom extends Room<State> {
                 if (this.clients[i].sessionId != clientID) continue;
                 
                 const point = Math.floor(Math.random() * this.spawnPointCount);
-                const z = Math.floor(Math.random() * 50) - 25;
-
+                
                 this.clients[i].send("Restart", point);
             }
         });

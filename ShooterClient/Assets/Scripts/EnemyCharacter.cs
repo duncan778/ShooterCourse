@@ -41,6 +41,7 @@ public class EnemyCharacter : Character
     public void RestoreHP(int newValue)
     {
         health.SetCurrent(newValue);
+        head.GetComponent<EnemyHead>().HideHead(false);
     }
 
     public void SetMovement(in Vector3 position, in Vector3 velocity, in float averageInterval)
@@ -60,6 +61,12 @@ public class EnemyCharacter : Character
             {"value", damage}
         };
         MultiplayerManager.Instance.SendMessage("damage", data);
+        RestoreHP(MaxHealth);
+    }
+
+    public void ApplyFullDamage()
+    {
+        ApplyDamage(MaxHealth);
     }
 
     public void SetRotateY(float value)
