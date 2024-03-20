@@ -99,24 +99,27 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public void Restart(string jsonRestartInfo)
+    public void Restart(int spawnIndex)
     {
-        RestartInfo info = JsonUtility.FromJson<RestartInfo>(jsonRestartInfo);
+        multiplayerManager.SpawnPoints.GetPoint(spawnIndex, out Vector3 position, out Vector3 rotation);
         StartCoroutine(Hold());
 
-        player.transform.position = new(info.x, 0, info.z);
+        player.transform.position = position;
+        rotation.x = 0;
+        rotation.z = 0;
+        player.transform.eulerAngles = rotation;
         player.SetInput(0, 0, 0);
         
         var data = new Dictionary<string, object>()
         {
-            { "pX", info.x },
-            { "pY", 0 },
-            { "pZ", info.z },
+            { "pX", position.x },
+            { "pY", position.y },
+            { "pZ", position.z },
             { "vX", 0 },
             { "vY", 0 },
             { "vZ", 0 },
             { "rX", 0 },
-            { "rY", 0 }
+            { "rY", rotation.y }
         };
         multiplayerManager.SendMessage("move", data);
     }
@@ -141,9 +144,3 @@ public struct ShootInfo
     public float dZ;
 }
 
-[System.Serializable]
-public struct RestartInfo
-{
-    public float x;
-    public float z;
-}
