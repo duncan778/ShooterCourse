@@ -7,6 +7,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     [field: SerializeField] public Skins Skins { get; private set; }
     [field: SerializeField] public LossCounter LossCounter { get; private set; }
     [field: SerializeField] public SpawnPoints SpawnPoints { get; private set; }
+    [field: SerializeField] public float RestartDelay { get; private set; } = 3f;
     [SerializeField] private PlayerCharacter player;
     [SerializeField] private EnemyController enemy;
 

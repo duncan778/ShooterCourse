@@ -70,7 +70,7 @@ public class EnemyController : MonoBehaviour
                     MultiplayerManager.Instance.LossCounter.SetEnemyLoss((ushort)dataChange.Value);
                     break;
                 case "currentHP":
-                    if ((sbyte)dataChange.Value > (sbyte)dataChange.PreviousValue)
+                    if ((sbyte)dataChange.Value == player.maxHP)
                         character.RestoreHP((sbyte)dataChange.Value);
                     break;
                 case "pX":

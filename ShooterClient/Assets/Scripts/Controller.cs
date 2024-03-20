@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    [SerializeField] private float restartDelay = 3f;
     [SerializeField] PlayerCharacter player;
     [SerializeField] private PlayerGun gun;
     [SerializeField] private float mouseSensetivity = 2f;
@@ -127,7 +126,7 @@ public class Controller : MonoBehaviour
     private IEnumerator Hold()
     {
         hold = true;
-        yield return new WaitForSecondsRealtime(restartDelay);
+        yield return new WaitForSecondsRealtime(multiplayerManager.RestartDelay);
         hold = false;
     }
 }

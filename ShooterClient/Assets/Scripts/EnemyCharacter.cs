@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,13 +55,26 @@ public class EnemyCharacter : Character
 
     public void ApplyDamage(int damage)
     {
-        health.ApplyDamage(damage);
-        Dictionary<string, object> data = new() 
+        if (health.ApplyDamageAndDie(damage))
+            StartCoroutine(DeathDelay(damage));
+        else
+            SendDamage(damage);
+    }
+
+    private void SendDamage(int damage)
+    {
+        Dictionary<string, object> data = new()
         {
             {"id", sessionID},
             {"value", damage}
         };
         MultiplayerManager.Instance.SendMessage("damage", data);
+    }
+
+    private IEnumerator DeathDelay(int damage)
+    {
+        yield return new WaitForSecondsRealtime(MultiplayerManager.Instance.RestartDelay / 2);
+        SendDamage(damage);
         RestoreHP(MaxHealth);
     }
 

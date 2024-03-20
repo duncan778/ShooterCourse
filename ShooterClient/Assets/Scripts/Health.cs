@@ -21,10 +21,11 @@ public class Health : MonoBehaviour
         UpdateHP();
     }
 
-    public void ApplyDamage(int damage)
+    public bool ApplyDamageAndDie(int damage)
     {
         current -= damage;
         UpdateHP();
+        return current <= 0;
     }
 
     private void UpdateHP()
