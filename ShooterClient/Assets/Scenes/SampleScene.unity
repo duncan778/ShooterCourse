@@ -500,6 +500,7 @@ MonoBehaviour:
   <Skins>k__BackingField: {fileID: 757677043}
   <LossCounter>k__BackingField: {fileID: 1351015855}
   <SpawnPoints>k__BackingField: {fileID: 1215446364}
+  <RestartDelay>k__BackingField: 3
   player: {fileID: 4862608659234281529, guid: 2653d8ed8668c35cb949b786e6dccace, type: 3}
   enemy: {fileID: -2673800919989353267, guid: a4cf71689c23f4db2b5d7c13ee65b4c6, type: 3}
 --- !u!114 &757677043
@@ -1153,6 +1154,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885285635812502353, guid: c517956007e2abd4e9a7f999f51e2149,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6885285635812502366, guid: c517956007e2abd4e9a7f999f51e2149,
         type: 3}
