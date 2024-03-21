@@ -500,6 +500,7 @@ MonoBehaviour:
   <Skins>k__BackingField: {fileID: 757677043}
   <LossCounter>k__BackingField: {fileID: 1351015855}
   <SpawnPoints>k__BackingField: {fileID: 1215446364}
+  <RestartDelay>k__BackingField: 3
   player: {fileID: 4862608659234281529, guid: 2653d8ed8668c35cb949b786e6dccace, type: 3}
   enemy: {fileID: -2673800919989353267, guid: a4cf71689c23f4db2b5d7c13ee65b4c6, type: 3}
 --- !u!114 &757677043
@@ -772,6 +773,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1215446363}
   m_LocalEulerAnglesHint: {x: 0, y: 143.535, z: 0}
+--- !u!1 &1338060116 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5404654786775238236, guid: c517956007e2abd4e9a7f999f51e2149,
+    type: 3}
+  m_PrefabInstance: {fileID: 1401663470}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1338060120
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338060116}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 19518579058340498, guid: 5907afe82931dba47abd31177690fc35, type: 3}
 --- !u!1 &1351015850
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,6 +1155,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6885285635812502353, guid: c517956007e2abd4e9a7f999f51e2149,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6885285635812502366, guid: c517956007e2abd4e9a7f999f51e2149,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1263,7 +1297,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1215446363}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5404654786775238236, guid: c517956007e2abd4e9a7f999f51e2149,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1338060120}
   m_SourcePrefab: {fileID: 100100000, guid: c517956007e2abd4e9a7f999f51e2149, type: 3}
 --- !u!4 &1401663471 stripped
 Transform:

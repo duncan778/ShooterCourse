@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LookAtCamera : MonoBehaviour
 {
-    private Transform camera;
+    private Transform cameraTr;
 
     void Start()
     {
-        camera = Camera.main.transform;
+        cameraTr = Camera.main.transform;
     }
 
-    void Update()
+    void LateUpdate()
     {
-        transform.LookAt(camera);
+        transform.LookAt(cameraTr);
     }
 }

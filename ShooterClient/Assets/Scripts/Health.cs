@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -7,6 +5,7 @@ public class Health : MonoBehaviour
     [SerializeField] private HealthUI ui;
     private int max;
     private int current;
+    public int Current { get { return current; } }
 
     public void SetMax(int max)
     {
@@ -20,14 +19,16 @@ public class Health : MonoBehaviour
         UpdateHP();
     }
 
-    public void ApplyDamage(int damage)
+    public bool ApplyDamageAndDie(int damage)
     {
         current -= damage;
         UpdateHP();
+        return current <= 0;
     }
 
     private void UpdateHP()
     {
         ui.UpdateHealth(max, current);
     }
+
 }

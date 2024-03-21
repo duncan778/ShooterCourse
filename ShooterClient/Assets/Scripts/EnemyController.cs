@@ -66,11 +66,14 @@ public class EnemyController : MonoBehaviour
         {
             switch (dataChange.Field)
             {
+                case "gunID":
+                    gun.ChangeGun((sbyte)dataChange.Value);
+                    break;
                 case "loss":
                     MultiplayerManager.Instance.LossCounter.SetEnemyLoss((ushort)dataChange.Value);
                     break;
                 case "currentHP":
-                    if ((sbyte)dataChange.Value > (sbyte)dataChange.PreviousValue)
+                    if ((sbyte)dataChange.Value == player.maxHP)
                         character.RestoreHP((sbyte)dataChange.Value);
                     break;
                 case "pX":
@@ -97,7 +100,6 @@ public class EnemyController : MonoBehaviour
                 case "rY":
                     character.SetRotateY((float)dataChange.Value);
                     break;
-
                 default:
                     Debug.LogWarning("Не обрабатывается изменение поля " + dataChange.Field);
                     break;

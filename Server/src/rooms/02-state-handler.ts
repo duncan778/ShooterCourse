@@ -5,6 +5,9 @@ export class Player extends Schema {
     @type("uint8")
     skin = 0;
 
+    @type("int8")
+    gunID = 0;
+    
     @type("uint16")
     loss = 0;
 
@@ -58,6 +61,7 @@ export class State extends Schema {
         player.pY = data.pY;
         player.pZ = data.pZ;
         player.rY = data.rY;
+        player.gunID = data.gunID;
 
         this.players.set(sessionId, player);
     }
@@ -133,8 +137,7 @@ export class StateHandlerRoom extends Room<State> {
                 if (this.clients[i].sessionId != clientID) continue;
                 
                 const point = Math.floor(Math.random() * this.spawnPointCount);
-                const z = Math.floor(Math.random() * 50) - 25;
-
+                
                 this.clients[i].send("Restart", point);
             }
         });

@@ -1,12 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    [SerializeField] private float restartDelay = 3f;
     [SerializeField] PlayerCharacter player;
     [SerializeField] private PlayerGun gun;
     [SerializeField] private float mouseSensetivity = 2f;
@@ -38,13 +35,15 @@ public class Controller : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y");
 
         bool space = Input.GetKeyDown(KeyCode.Space);
-
         bool isShoot = Input.GetMouseButton(0);
+        float mouseWheel = Input.GetAxis("Mouse ScrollWheel");
+    
 
         player.SetInput(h, v, mouseX * mouseSensetivity);
         player.RotateX(-mouseY * mouseSensetivity);
         if (space) player.Jump();
         if (isShoot && gun.TryShoot(out ShootInfo shootInfo)) SendShoot(ref shootInfo);
+        if (mouseWheel != 0) gun.ChangeGun(mouseWheel);
         SendMove();
     }
 
@@ -127,7 +126,7 @@ public class Controller : MonoBehaviour
     private IEnumerator Hold()
     {
         hold = true;
-        yield return new WaitForSecondsRealtime(restartDelay);
+        yield return new WaitForSecondsRealtime(multiplayerManager.RestartDelay);
         hold = false;
     }
 }

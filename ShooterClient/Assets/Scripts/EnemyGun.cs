@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyGun : Gun
@@ -9,4 +7,5 @@ public class EnemyGun : Gun
         Instantiate(bulletPrefab, position, Quaternion.identity).Init(velocity);
         OneShot?.Invoke();
     }
+
 }
