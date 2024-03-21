@@ -85,11 +85,11 @@ public class EnemyCharacter : Character
 
     public void SetRotateY(float value)
     {
-        transform.localEulerAngles = new(0, value, 0);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, value, 0), Time.deltaTime * 100f);
     }
 
     public void SetRotateX(float value)
     {
-        head.localEulerAngles = new(value, 0, 0);
+        head.localRotation = Quaternion.Lerp(head.localRotation, Quaternion.Euler(value, 0, 0), Time.deltaTime * 100f);
     }
 }
