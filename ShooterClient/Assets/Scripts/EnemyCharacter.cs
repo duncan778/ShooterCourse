@@ -6,6 +6,7 @@ public class EnemyCharacter : Character
 {
     [SerializeField] private Health health;
     [SerializeField] private Transform head;
+    [SerializeField] private CharacterAnimation characterAnimation;
     public Vector3 TargetPosition { get; private set; } = Vector3.zero;
     private float velocityMagnitude = 0;
     private string sessionID;
@@ -73,9 +74,11 @@ public class EnemyCharacter : Character
 
     private IEnumerator DeathDelay(int damage)
     {
+        characterAnimation.Death();
         yield return new WaitForSecondsRealtime(MultiplayerManager.Instance.RestartDelay / 2);
         SendDamage(damage);
         RestoreHP(MaxHealth);
+        characterAnimation.Respawn();
     }
 
     public void ApplyFullDamage()

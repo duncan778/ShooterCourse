@@ -7,6 +7,7 @@ public class CharacterAnimation : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private CheckFly checkFly;
     [SerializeField] private Character character;
+    [SerializeField] private Animator deathAnimator;
 
     private void Update()
     {
@@ -17,4 +18,15 @@ public class CharacterAnimation : MonoBehaviour
         animator.SetFloat(Speed, speed * sign);
         animator.SetBool(Grouned, checkFly.IsFly == false);
     }
+
+    public void Death()
+    {
+        deathAnimator.SetBool("Death", true);
+    }
+
+    public void Respawn()
+    {
+        deathAnimator.SetBool("Death", false);
+    }
+
 }
