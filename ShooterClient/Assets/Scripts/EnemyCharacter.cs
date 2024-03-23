@@ -95,4 +95,5 @@ public class EnemyCharacter : Character
     {
         head.localRotation = Quaternion.Lerp(head.localRotation, Quaternion.Euler(value, 0, 0), Time.deltaTime * 100f);
     }
+
 }
